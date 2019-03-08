@@ -5,15 +5,22 @@ import {Constants} from 'expo'
 import contacts, {compareNames} from './contacts'
 import Row from './Row'
 import ContactsList from './ContactsList'
+import AddContactForm from './AddContactForm'
 
 export default class App extends React.Component {
   state = {
     showContacts: false,
+    showForm: false,
     contacts: contacts,
   }
 
   toggleContacts = () => {
     this.setState(prevState => ({showContacts: !prevState.showContacts}))
+  }
+
+  // This will toggle Add Contact form
+  toggleForm = () => {
+    this.setState(prevState => ({showForm: !prevState.showForm}))
   }
   
   sort = () => {
@@ -23,10 +30,13 @@ export default class App extends React.Component {
   }
 
   render() {
+
+    if(this.state.showForm) return <AddContactForm />
+
     return (
       <View style={styles.container}>
-        <Button title="toggle contacts" onPress={this.toggleContacts}/>
-        <Button title="sort" onPress={this.sort}/>
+        <Button title="Toggle Contacts" onPress={this.toggleContacts}/>
+        <Button title="Add Contact" onPress={this.toggleForm}/>
         {this.state.showContacts &&
           <ContactsList contacts={this.state.contacts} />                  
         }
