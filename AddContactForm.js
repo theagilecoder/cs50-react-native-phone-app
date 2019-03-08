@@ -35,6 +35,13 @@ export default class AddContactForm extends React.Component {
     this.setState({phone})
   }
 
+  // AddContactForm is not the right place to be adding contacts
+  // So it justs passes the state to some function included in props
+  //  whose function is to actually add the Contact.
+  handleSubmit = () => {
+    this.props.onSubmit(this.state)
+  }
+
   render() {
     return (
       <View style={styles.container}>
@@ -51,7 +58,7 @@ export default class AddContactForm extends React.Component {
           onChangeText={this.handlePhoneChange}
           placeholder="Phone"
         />
-        <Button title="Submit" />
+        <Button title="Submit" onPress={this.handleSubmit} />
       </View>
     )
   }
