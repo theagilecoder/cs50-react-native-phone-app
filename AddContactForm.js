@@ -27,12 +27,28 @@ export default class AddContactForm extends React.Component {
     isFormValid: false,
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if(this.state.name !== prevState.name || this.state.phone !== prevState.phone) {
+      this.validateForm()
+    }
+  }
+
   handleNameChange = name => {
     this.setState({name})
   }
 
   handlePhoneChange = phone => {
-    this.setState({phone})
+    if (+phone >=0 && phone.length <= 10) {
+      this.setState({phone})
+    }
+  }
+
+  validateForm = () => {
+    if (+this.state.phone >=0 && this.state.phone.length === 10 && this.state.name.length >= 3) {
+      this.setState({isFormValid: true})
+    } else {
+      this.setState({isFormValid: false})
+    }     
   }
 
   // AddContactForm is not the right place to be adding contacts
@@ -58,7 +74,7 @@ export default class AddContactForm extends React.Component {
           onChangeText={this.handlePhoneChange}
           placeholder="Phone"
         />
-        <Button title="Submit" onPress={this.handleSubmit} />
+        <Button title="Submit" onPress={this.handleSubmit} disabled={!this.state.isFormValid} />
       </View>
     )
   }
