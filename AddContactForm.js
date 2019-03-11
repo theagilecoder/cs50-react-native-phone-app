@@ -52,7 +52,7 @@ export default class AddContactForm extends React.Component {
   }
 
   // AddContactForm is not the right place to be adding contacts
-  // So it justs passes the state to some function included in props
+  // So it just passes the state to some function included in props
   //  whose function is to actually add the Contact.
   handleSubmit = () => {
     this.props.onSubmit(this.state)
