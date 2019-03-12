@@ -3,11 +3,11 @@ import { Button, SectionList, StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo'
 
 import contacts, {compareNames} from './contacts'
-import { createSwitchNavigator, createAppContainer } from 'react-navigation'
+import { createStackNavigator, createAppContainer } from 'react-navigation'
 import AddContactScreen from './screens/AddContactScreen';
 import ContactListScreen from './screens/ContactListScreen';
 
-const AppNavigator = createAppContainer(createSwitchNavigator(
+const AppNavigator = createAppContainer(createStackNavigator(
   {
     AddContact: AddContactScreen,
     ContactList: ContactListScreen,

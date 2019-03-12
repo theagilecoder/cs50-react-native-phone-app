@@ -1,10 +1,15 @@
 import React from 'react';
-import { Button, SectionList, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, View } from 'react-native';
 import { Constants } from 'expo'
 
 import SectionListContacts from '../SectionListContacts'
 
 export default class ContactListScreen extends React.Component {
+  static navigationOptions = ({navigation}) => ({
+    headerTitle: 'Contacts',
+    headerRight: <Button title="Add" onPress={() => {navigation.navigate('AddContact')}} />,
+  })
+
   state = {
     showContacts: true,  
   }
@@ -20,8 +25,6 @@ export default class ContactListScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Button title="Toggle Contacts" onPress={this.toggleContacts}/>
-        <Button title="Add Contact" onPress={this.showForm}/>
         {this.state.showContacts &&
           <SectionListContacts contacts={this.props.screenProps.contacts} />                  
         }
