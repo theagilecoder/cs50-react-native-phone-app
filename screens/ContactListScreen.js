@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, SectionList, StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo'
 
-import ContactsList from '../ContactsList'
+import SectionListContacts from '../SectionListContacts'
 
 export default class ContactListScreen extends React.Component {
   state = {
@@ -23,7 +23,7 @@ export default class ContactListScreen extends React.Component {
         <Button title="Toggle Contacts" onPress={this.toggleContacts}/>
         <Button title="Add Contact" onPress={this.showForm}/>
         {this.state.showContacts &&
-          <ContactsList contacts={this.props.screenProps.contacts} />                  
+          <SectionListContacts contacts={this.props.screenProps.contacts} />                  
         }
       </View>
     )

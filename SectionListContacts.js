@@ -6,11 +6,11 @@ import Row from './Row'
 // These two are declared here because they will be declared only once
 // and then can be reused in SectionList component. Otherwise, they 
 // would be instantiated every time SectionList is rendered.
-const renderItem = obj => <Row {...(obj.item)} />
+const renderItem = ({ item }) => <Row {...item} />;
 
-const renderSectionHeader = obj => <Text>{obj.section.title}</Text>
+const renderSectionHeader = ({ section }) => <Text>{section.title}</Text>;
 
-const ContactsList = props => {
+const SectionListContacts = props => {
 
   // this is the new contacts by letter with the shape as
   // { 'A' : [contact1, contact2], 'B' : contact3, contact4], ...}
@@ -32,17 +32,15 @@ const ContactsList = props => {
 
   return (
     <SectionList 
+      sections={sections}
       renderItem={renderItem}
       renderSectionHeader={renderSectionHeader}
-      sections={sections}
     /> 
   )
 }
 
-ContactsList.propTypes = {
-  renderItem: PropTypes.func,
-  renderSectionHeader: PropTypes.func,
+SectionListContacts.propTypes = {
   contacts: PropTypes.array,
 }
 
-export default ContactsList
+export default SectionListContacts
