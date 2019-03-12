@@ -6,12 +6,13 @@ import Row from './Row'
 // These two are declared here because they will be declared only once
 // and then can be reused in SectionList component. Otherwise, they 
 // would be instantiated every time SectionList is rendered.
-const renderItem = ({ item }) => <Row {...item} />;
 
 const renderSectionHeader = ({ section }) => <Text>{section.title}</Text>;
 
 const SectionListContacts = props => {
 
+  const renderItem = ({ item }) => <Row {...item} onSelectContact={props.onSelectContact}/>;
+  
   // this is the new contacts by letter with the shape as
   // { 'A' : [contact1, contact2], 'B' : contact3, contact4], ...}
   const contactsByLetter = props.contacts.reduce((obj, contact) => {
