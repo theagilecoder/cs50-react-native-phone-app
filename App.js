@@ -3,14 +3,17 @@ import { Button, SectionList, StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo'
 
 import contacts, {compareNames} from './contacts'
-import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
+import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
 import AddContactScreen from './screens/AddContactScreen';
 import ContactListScreen from './screens/ContactListScreen';
 import ContactDetailsScreen from "./screens/ContactDetailsScreen";
 import LoginScreen from "./screens/LoginScreen";
+import SettingsScreen from "./screens/SettingsScreen"
 
-// the main stack navigator visible after you login
-const MainNavigator = createAppContainer(createStackNavigator(
+import Ionicons from "react-native-vector-icons/Ionicons";
+
+// the main stack navigator having Contact List and Add Contact
+const ContactsTab = createAppContainer(createStackNavigator(
   {
     AddContact: AddContactScreen,
     ContactList: ContactListScreen,
@@ -18,8 +21,31 @@ const MainNavigator = createAppContainer(createStackNavigator(
   }, 
   {
     initialRouteName: 'ContactList',
+    navigationOptions: { 
+      headerTintColor: '#a41034', 
+    },
   }
 ));
+
+ContactsTab.navigationOptions = {
+  tabBarIcon: ({ focused, tintColor }) => (
+    <Ionicons
+      name={`ios-contacts${focused ? "" : ""}`}
+      size={25}
+      color={tintColor}
+    />
+  )
+};
+
+// The middle tab nav that houses the stack navigator
+const MainNavigator = createAppContainer(createBottomTabNavigator({
+  Contacts: ContactsTab,
+  Settings: SettingsScreen,
+}, {
+  tabBarOptions:{
+    activeTintColor: '#a41034',
+  },
+}))
 
 // The outer switch navigator that will show login screen
 const AppNavigator = createAppContainer(createSwitchNavigator(

@@ -7,7 +7,7 @@ import SectionListContacts from '../SectionListContacts'
 export default class ContactListScreen extends React.Component {
   static navigationOptions = ({navigation}) => ({
     headerTitle: 'Contacts',
-    headerRight: <Button title="Add" onPress={() => {navigation.navigate('AddContact')}} />,
+    headerRight: <Button title="Add" color="#a41034" onPress={() => {navigation.navigate('AddContact')}} />,
   })
 
   state = {
