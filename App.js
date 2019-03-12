@@ -3,12 +3,14 @@ import { Button, SectionList, StyleSheet, Text, View } from 'react-native';
 import { Constants } from 'expo'
 
 import contacts, {compareNames} from './contacts'
-import { createStackNavigator, createAppContainer } from 'react-navigation'
+import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
 import AddContactScreen from './screens/AddContactScreen';
 import ContactListScreen from './screens/ContactListScreen';
 import ContactDetailsScreen from "./screens/ContactDetailsScreen";
+import LoginScreen from "./screens/LoginScreen";
 
-const AppNavigator = createAppContainer(createStackNavigator(
+// the main stack navigator visible after you login
+const MainNavigator = createAppContainer(createStackNavigator(
   {
     AddContact: AddContactScreen,
     ContactList: ContactListScreen,
@@ -18,6 +20,16 @@ const AppNavigator = createAppContainer(createStackNavigator(
     initialRouteName: 'ContactList',
   }
 ));
+
+// The outer switch navigator that will show login screen
+const AppNavigator = createAppContainer(createSwitchNavigator(
+  {
+    Main: MainNavigator,
+    Login: LoginScreen,
+  }, {
+    initialRouteName: 'Login',
+  }
+))
 
 export default class App extends React.Component {
   state = {
