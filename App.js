@@ -8,8 +8,7 @@ import SettingsScreen from "./screens/SettingsScreen"
 import ContactListScreen from './screens/ContactListScreen';
 import ContactDetailsScreen from "./screens/ContactDetailsScreen";
 import LoginScreen from "./screens/LoginScreen";
-import contacts from './contacts'
-
+import {fetchUsers} from './api'
 
 // the main stack navigator having Contact List and Add Contact
 const MainStack = createAppContainer(createStackNavigator(
@@ -58,7 +57,13 @@ const AppNavigator = createAppContainer(createSwitchNavigator(
 
 export default class App extends React.Component {
   state = {
-    contacts,
+    contacts: null,
+  }
+
+  // call api
+  componentDidMount() {
+    fetchUsers()
+      .then(results => this.setState({contacts: results}))
   }
 
   // Adds the new contact sent by AddContactForm to this.state.contacts
