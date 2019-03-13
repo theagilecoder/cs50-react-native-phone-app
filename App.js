@@ -1,19 +1,18 @@
 import React from 'react';
-import { Button, SectionList, StyleSheet, Text, View } from 'react-native';
-import { Constants } from 'expo'
-
-import contacts, {compareNames} from './contacts'
+import { View } from 'react-native';
 import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
+
+import Ionicons from "react-native-vector-icons/Ionicons";
 import AddContactScreen from './screens/AddContactScreen';
+import SettingsScreen from "./screens/SettingsScreen"
 import ContactListScreen from './screens/ContactListScreen';
 import ContactDetailsScreen from "./screens/ContactDetailsScreen";
 import LoginScreen from "./screens/LoginScreen";
-import SettingsScreen from "./screens/SettingsScreen"
+import contacts from './contacts'
 
-import Ionicons from "react-native-vector-icons/Ionicons";
 
 // the main stack navigator having Contact List and Add Contact
-const ContactsTab = createAppContainer(createStackNavigator(
+const MainStack = createAppContainer(createStackNavigator(
   {
     AddContact: AddContactScreen,
     ContactList: ContactListScreen,
@@ -27,7 +26,7 @@ const ContactsTab = createAppContainer(createStackNavigator(
   }
 ));
 
-ContactsTab.navigationOptions = {
+MainStack.navigationOptions = {
   tabBarIcon: ({ focused, tintColor }) => (
     <Ionicons
       name={`ios-contacts${focused ? "" : ""}`}
@@ -38,8 +37,8 @@ ContactsTab.navigationOptions = {
 };
 
 // The middle tab nav that houses the stack navigator
-const MainNavigator = createAppContainer(createBottomTabNavigator({
-  Contacts: ContactsTab,
+const MainTabs = createAppContainer(createBottomTabNavigator({
+  Contacts: MainStack,
   Settings: SettingsScreen,
 }, {
   tabBarOptions:{
@@ -50,7 +49,7 @@ const MainNavigator = createAppContainer(createBottomTabNavigator({
 // The outer switch navigator that will show login screen
 const AppNavigator = createAppContainer(createSwitchNavigator(
   {
-    Main: MainNavigator,
+    Main: MainTabs,
     Login: LoginScreen,
   }, {
     initialRouteName: 'Login',
@@ -59,7 +58,7 @@ const AppNavigator = createAppContainer(createSwitchNavigator(
 
 export default class App extends React.Component {
   state = {
-    contacts: contacts,
+    contacts,
   }
 
   // Adds the new contact sent by AddContactForm to this.state.contacts
@@ -71,11 +70,3 @@ export default class App extends React.Component {
     return <AppNavigator screenProps={{ contacts: this.state.contacts, addContact: this.addContact }} />;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: Constants.statusBarHeight,
-  },
-});

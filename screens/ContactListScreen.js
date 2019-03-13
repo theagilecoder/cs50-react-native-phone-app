@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, StyleSheet, View } from 'react-native';
-import { Constants } from 'expo'
+import { Button, View, StyleSheet } from 'react-native';
 
 import SectionListContacts from '../SectionListContacts'
 
@@ -12,10 +11,6 @@ export default class ContactListScreen extends React.Component {
 
   state = {
     showContacts: true,  
-  }
-
-  showForm = () => {
-    this.props.navigation.navigate('AddContact');
   }
 
   toggleContacts = () => {
@@ -43,7 +38,5 @@ export default class ContactListScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    paddingTop: Constants.statusBarHeight,
   },
-});
+})
