@@ -1,9 +1,10 @@
 import React from 'react';
 import { Button, View, StyleSheet } from 'react-native';
+import {connect} from 'react-redux'
 
 import SectionListContacts from '../SectionListContacts'
 
-export default class ContactListScreen extends React.Component {
+class ContactListScreen extends React.Component {
   static navigationOptions = ({navigation}) => ({
     headerTitle: 'Contacts',
     headerRight: <Button title="Add" color="#a41034" onPress={() => {navigation.navigate('AddContact')}} />,
@@ -17,19 +18,20 @@ export default class ContactListScreen extends React.Component {
     this.setState(prevState => ({showContacts: !prevState.showContacts}))
   }
 
+  handleSelectContact = contact => {
+    this.props.navigation.push('ContactDetails', contact)
+  }
+
   render() {
     return (
       <View style={styles.container}>
-        {this.state.showContacts &&
-          <SectionListContacts 
-            contacts={this.props.screenProps.contacts}
-            onSelectContact={(contact) => {
-              this.props.navigation.navigate('ContactDetails', {
-                phone: contact.phone,
-                name: contact.name,
-              })}}
-          />                  
-        }
+        <Button title="toggle contacts" onPress={this.toggleContacts} />
+        {this.state.showContacts && (
+          <SectionListContacts
+            contacts={this.props.contacts}
+            onSelectContact={this.handleSelectContact}
+          />
+        )}
       </View>
     )
   }
@@ -40,3 +42,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 })
+
+const mapStateToProps = state => ({
+  contacts: state.contacts,
+})
+
+export default connect(mapStateToProps)(ContactListScreen)

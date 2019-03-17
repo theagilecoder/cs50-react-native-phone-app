@@ -1,6 +1,8 @@
 import React from 'react';
 import { View } from 'react-native';
 import { createSwitchNavigator, createBottomTabNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
+import {Provider} from 'react-redux'
+import store from './redux/store'
 
 import Ionicons from "react-native-vector-icons/Ionicons";
 import AddContactScreen from './screens/AddContactScreen';
@@ -73,6 +75,10 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <MainTabs screenProps={{ contacts: this.state.contacts, addContact: this.addContact }} />;
+    return (
+      <Provider store={store}>
+        <MainTabs />
+      </Provider>
+    )
   }
 }
