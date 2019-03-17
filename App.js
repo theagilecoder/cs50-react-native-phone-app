@@ -9,6 +9,7 @@ import ContactListScreen from './screens/ContactListScreen';
 import ContactDetailsScreen from "./screens/ContactDetailsScreen";
 import LoginScreen from "./screens/LoginScreen";
 import {fetchUsers} from './api'
+import contacts from './contacts'
 
 // the main stack navigator having Contact List and Add Contact
 const MainStack = createAppContainer(createStackNavigator(
@@ -50,21 +51,21 @@ const AppNavigator = createAppContainer(createSwitchNavigator(
   {
     Main: MainTabs,
     Login: LoginScreen,
-  }, {
-    initialRouteName: 'Login',
   }
 ))
 
 export default class App extends React.Component {
   state = {
-    contacts: null,
+    contacts,
   }
 
+  /*
   // call api
   componentDidMount() {
     fetchUsers()
       .then(results => this.setState({contacts: results}))
   }
+  */
 
   // Adds the new contact sent by AddContactForm to this.state.contacts
   addContact = newContact => {
@@ -72,6 +73,6 @@ export default class App extends React.Component {
   }
 
   render() {
-    return <AppNavigator screenProps={{ contacts: this.state.contacts, addContact: this.addContact }} />;
+    return <MainTabs screenProps={{ contacts: this.state.contacts, addContact: this.addContact }} />;
   }
 }
